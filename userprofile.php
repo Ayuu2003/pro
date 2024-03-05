@@ -127,6 +127,7 @@ include_once("includes/head.php");
                                         </tr>
                                     </thead>
                                     <tbody>
+                                      
 
                                    
 
@@ -273,34 +274,62 @@ include_once("includes/head.php");
                     </div>
 
                     <div class="col-md-3">
-                        <div class="shpcart-subtotal-block">
-                            <div class="subtotal-line">
-                                <b class="stt-name">Total <span class="sub">(<?php echo   $_SESSION['cart_pdt_number'] ?> Items)</span></b>
-                                <span class="stt-price" id="totalOfall"> <?php echo $_SESSION['subtotal']  ?> </span>
+    <div class="shpcart-subtotal-block">
+        <div class="subtotal-line">
+            <b class="stt-name">Total <span class="sub">(<?php echo $_SESSION['cart_pdt_number'] ?> Items)</span></b>
+            <span class="stt-price" id="totalOfall"><?php echo $_SESSION['subtotal'] ?></span>
+        </div>
+
+        <div class="subtotal-line">
+            <p class="stt-name" style="font-weight: normal;">Use Cupon (paudha)</p>
+            <br>
+            <input type="text" name="coupon" id="cupon" class="form-control" style="width:40%; padding:5px; display:inline">
+            <span class="stt-price" style="font-weight: normal;" id="discount">0</span>
+        </div>
+
+        <hr style="border-top:1px solid #313030">
+
+        <div class="subtotal-line">
+            <b class="stt-name" style="font-weight: normal;">Total</b>
+            <span class="stt-price" style="font-weight: normal;" id="afterdiscount"></span>
+        </div>
+
+        <div style="margin-top: 25px;">
+            <b class="stt-name">Payment <span class="sub"></span></b>
+            <br>
+            <input type="radio" name="payment_option" id="payment_upi" value="upi" onclick="showPaymentOption(this)">
+            <label for="payment_upi">UPI</label>
+
+            <input type="radio" name="payment_option" id="payment_card" value="card" onclick="showPaymentOption(this)">
+            <label for="payment_card">Card (Credit/Debit)</label>
+
+            <input type="radio" name="payment_option" id="payment_cod" value="cod" onclick="showPaymentOption(this)">
+            <label for="payment_cod">Cash on Delivery</label>
+        </div>
+
+        <div id="upi-options" style="display:none;">
+            <!-- Display UPI options here, like QR code -->
+            <!-- Example: -->
+            <img src="qr.jpg" alt="Demo QR Code">
+        </div>
+
+        <div id="card-options" style="display:none;">
+            <!-- Display Card input fields here -->
+            <!-- Example: -->
+            <input type="text" name="card_number" placeholder="Card Number">
+            <input type="text" name="expiry_date" placeholder="Expiry Date">
+            <input type="text" name="cvv" placeholder="CVV">
+        </div>
 
 
-                            </div>
-
-                            <div class="subtotal-line ">
-                                <p class="stt-name" style="font-weight: normal;">Use Cupon (fruitsbazar)</p>
-                                <br>
-                                <input type="text" name="coupon" id="cupon" class="form-control" style="width:40%; padding:5px; display:inline">
-
-                                <span class="stt-price" style="font-weight: normal;" id="discount">0</span>
-                            </div>
-
-                            <hr style="border-top:1px solid #313030">
-
-                            <div class="subtotal-line">
-                                <b class="stt-name" style="font-weight: normal;">Total</b>
-                                <span class="stt-price" style="font-weight: normal;" id="afterdiscount"></span>
-                            </div>
-
-                            <div style="margin-top: 25px;">
+                            <!-- <div style="margin-top: 25px;">
                             <b class="stt-name">Payment <span class="sub"></span></b> 
                                 <input type="text" style="border: none; width:100%;" placeholder="input bKash TXID" name="txid" required>
 
-                            </div>
+                            </div> -->
+                  
+                           
+                        
 
                             <div style="margin-top: 25px;">
                             <b class="stt-name">Mobile <span class="sub"></span></b>  <br>
@@ -453,6 +482,22 @@ include_once("includes/head.php");
 
         })
     </script>
+<script>
+    function showPaymentOption(selectedOption) {
+        var option = selectedOption.value;
+        if (option === 'upi') {
+            document.getElementById('upi-options').style.display = 'block';
+            document.getElementById('card-options').style.display = 'none';
+        } else if (option === 'card') {
+            document.getElementById('upi-options').style.display = 'none';
+            document.getElementById('card-options').style.display = 'block';
+        } else if (option === 'cod') {
+            document.getElementById('upi-options').style.display = 'none';
+            document.getElementById('card-options').style.display = 'none';
+        }
+    }
+</script>
+
     <!-- FOOTER -->
 
     <?php
